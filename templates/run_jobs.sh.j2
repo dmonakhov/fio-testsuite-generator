@@ -1,0 +1,24 @@
+#!/bin/bash -xe
+
+
+sha1sum $0
+
+if [ -n "$AVOCADO_TEST_OUTPUTDIR" ]; then
+    cp $0 $AVOCADO_TEST_OUTPUTDIR
+fi
+
+JOB_ROOT="/root/TESTS/v2/{{ JOB_PREFIX }}"
+
+mkdir -p $JOB_ROOT/results
+
+for j in `ls $JOB_ROOT/jobs/`
+do
+    out=`basename $j .fio`
+    fio $JOB_ROOT/jobs/$j --output=$JOB_ROOT/results/$out.json --output-format=json
+
+done
+
+if [ -n "$AVOCADO_TEST_OUTPUTDIR" ]; then
+    tar zcf $AVOCADO_TEST_OUTPUTDIR/results.tar.gz $JOB_ROOT
+fi
+

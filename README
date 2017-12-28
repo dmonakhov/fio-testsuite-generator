@@ -1,0 +1,25 @@
+# Very simple FIO's job and report generator for IO performance evaluations
+
+Example
+
+# Generate jobs
+/cli/gen_fio_jobs.sh cfg-env-grp1
+/cli/gen_fio_jobs.sh cfg-env-grp1
+
+## Run jobs
+# Run jobs from cfg-env-grp1
+/cli/gen_fio_jobs.sh cfg-env-grp1
+# Run jobs from cfg-env-grp2
+/cli/gen_fio_jobs.sh cfg-env-grp1
+
+## Generate report
+# Customize report header
+mkdir report
+cp report_header.org report/report_header.org
+emacs report/report_header.org
+
+## Finally generate report
+./cli/gen_report.sh
+
+# Publish report
+rsync -a report  My-archive-host:/var/www/html/public/meurmets-XX-XX

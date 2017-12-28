@@ -1,0 +1,20 @@
+[global]
+bs={{ FIO_BS }}
+ioengine={{ FIO_IOENGINE }}
+iodepth={{ FIO_IODEPTH }}
+size={{ FIO_SIZE }}
+filesize={{ FIO_FILESIZE }}
+direct=1
+runtime={{ FIO_RUNTIME }}
+numjobs={{ FIO_NUMJOBS }}
+fallocate=none
+group_reporting=1
+
+[{{ FIO_JOB_NAME }}]
+ramp_time={{ FIO_RAMP_TIME }}
+rw={{ FIO_OP }}
+#filename_format=/mnt-smp/$jobnum/file
+filename_format={{ FIO_FILENAME_FORMAT }}
+end_fsync=0
+fsync_on_close=0
+stonewall

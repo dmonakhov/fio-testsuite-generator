@@ -1,0 +1,14 @@
+#+TITLE: My title
+#+AUTHOR: Author's name
+#+OPTIONS: ^:nil
+
+* Test data intro
+Bla bla
+* Configuration
+Config bla bla
+
+* Test group descriptions
+** group1
+   - bla bla
+** group2
+   - bla bla
