@@ -1,7 +1,7 @@
 #! /bin/bash 
 
-if
 set -e
+
 FIO_BSIZE=4k
 
 FIO_JOB_TEMPLATE=templates/fio-job-template.fio.j2
