@@ -1,7 +1,9 @@
 #! /bin/bash 
 
+if
 set -e
-#filename_format=/mnt-smp/$jobnum/file
+FIO_BSIZE=4k
+
 FIO_JOB_TEMPLATE=templates/fio-job-template.fio.j2
 #FIO_JOB_ROOT=/mnt/mnt-smp/
 function gen_job () {
@@ -63,56 +65,55 @@ get_jobs_runner $JOB_PREFIX
 
 for i in 1 2 4 6 8 12 16 24 32 48 64 96
 do
-    gen_job $JOB_PREFIX sync read   $i 1 4k
-    gen_job $JOB_PREFIX sync write  $i 1 4k
-    gen_job $JOB_PREFIX sync randread   $i 1 4k
-    gen_job $JOB_PREFIX sync randwrite  $i 1 4k
+    gen_job $JOB_PREFIX sync read   $i 1 $FIO_BSIZE
+    gen_job $JOB_PREFIX sync write  $i 1 $FIO_BSIZE
+    gen_job $JOB_PREFIX sync randread   $i 1 $FIO_BSIZE
+    gen_job $JOB_PREFIX sync randwrite  $i 1 $FIO_BSIZE
 
 done
 
 for ((i=1;i<256;i=i*2))
 do
-    gen_job $JOB_PREFIX libaio randread  1 $i 4k
-    gen_job $JOB_PREFIX libaio randwrite 1 $i 4k
+    gen_job $JOB_PREFIX libaio randread  1 $i $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite 1 $i $FIO_BSIZE
 done
 
 for i in 1 2 4 6 8 12 16 24 32 48 64 96
 do
-    gen_job $JOB_PREFIX libaio read      $i 2 4k
-    gen_job $JOB_PREFIX libaio write     $i 2 4k
-    gen_job $JOB_PREFIX libaio randread  $i 2 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 2 4k
+    gen_job $JOB_PREFIX libaio read      $i 2 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 2 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 2 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 2 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 4 4k
-    gen_job $JOB_PREFIX libaio write     $i 4 4k
-    gen_job $JOB_PREFIX libaio randread  $i 4 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 4 4k
+    gen_job $JOB_PREFIX libaio read      $i 4 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 4 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 4 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 4 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 8 4k
-    gen_job $JOB_PREFIX libaio write     $i 8 4k
-    gen_job $JOB_PREFIX libaio randread  $i 8 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 8 4k
+    gen_job $JOB_PREFIX libaio read      $i 8 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 8 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 8 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 8 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 16 4k
-    gen_job $JOB_PREFIX libaio write     $i 16 4k
-    gen_job $JOB_PREFIX libaio randread  $i 16 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 16 4k
+    gen_job $JOB_PREFIX libaio read      $i 16 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 16 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 16 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 16 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 32 4k
-    gen_job $JOB_PREFIX libaio write     $i 32 4k
-    gen_job $JOB_PREFIX libaio randread  $i 32 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 32 4k
+    gen_job $JOB_PREFIX libaio read      $i 32 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 32 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 32 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 32 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 64 4k
-    gen_job $JOB_PREFIX libaio write     $i 64 4k
-    gen_job $JOB_PREFIX libaio randread  $i 64 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 64 4k
+    gen_job $JOB_PREFIX libaio read      $i 64 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 64 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 64 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 64 $FIO_BSIZE
 
-    gen_job $JOB_PREFIX libaio read      $i 128 4k
-    gen_job $JOB_PREFIX libaio write     $i 128 4k
-    gen_job $JOB_PREFIX libaio randread  $i 128 4k
-    gen_job $JOB_PREFIX libaio randwrite $i 128 4k
-
+    gen_job $JOB_PREFIX libaio read      $i 128 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio write     $i 128 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randread  $i 128 $FIO_BSIZE
+    gen_job $JOB_PREFIX libaio randwrite $i 128 $FIO_BSIZE
 done
 
 
