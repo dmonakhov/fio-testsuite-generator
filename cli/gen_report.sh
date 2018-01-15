@@ -7,6 +7,7 @@ DIR=$DIR/$(dirname $0)
 
 function raw_consolidate()
 {
+    mkdir -p report/raw-data
     for d in `find groups -mindepth 1 -maxdepth 1 -type d`;
     do
 	if [ -d "$d" ] && [ -d "$d/results" ];then
@@ -18,6 +19,7 @@ function raw_consolidate()
 		$DIR/fio_report_parse.sh $i >> results.txt
 	    done
 	    popd
+	    cp -r $d report/raw-data/
 	fi
     done
 }
@@ -41,7 +43,7 @@ function gen_groups ()
     do
 	for op in `cat tmp/group-op.txt`
 	do
-	    cat tmp/all_results.txt | grep $grp | grep $op > tmp.txt
+	    cat tmp/all_results.txt | grep $grp | grep $op > tmp.txt || continue
 	    mkdir -p report/ops/$op
 	    
 	    for d in `cat tmp/group-depth.txt`
@@ -148,7 +150,7 @@ EOF
 }
 
 mkdir -p tmp
-#raw_consolidate
+raw_consolidate
 gen_groups
 gen_graphs
 gen_org_report
